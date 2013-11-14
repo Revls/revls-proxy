@@ -3,7 +3,9 @@ var crypto  = require('crypto')
 var express = require('express');
 var app     = module.exports = express();
 var token   = md5(Date.now() + 'secrettoken');
-var json    = fs.readFileSync('./table.json', 'utf8')
+var json    = JSON.parse(fs.readFileSync('./table.json', 'utf8'))
+
+app.use(express.bodyParser());
 
 app.get('/api/token', function (req, res){
   res.end(token);
@@ -11,13 +13,14 @@ app.get('/api/token', function (req, res){
 
 app.post('/api/place/new', function (req, res){
   var data = req.body;
+  console.log(data, token)
   var notifier = app.get('notifier');
   if (token !== data.token) {
     res.statusCode = 403;
     return res.end('invalid request');
   }
   json[data.host] = data.port;
-  fs.writeFile('./table.json', JSON.stringify(json, null, 2), function (err){
+  fs.writeFile('./table.json', JSON.stringify(json, null, 2), 'utf8', function (err){
     if (err)
       return res.end('error processing request');
     if (notifier)
