@@ -1,0 +1,16 @@
+{
+  "name": "Proxy",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "minimatch": "~0.2.12",
+    "bouncy": "~3.2.1",
+    "express": "~3.4.4"
+  }
+}
